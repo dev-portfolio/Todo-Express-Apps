@@ -1,0 +1,112 @@
+
+
+<section class="todoapp" xmlns="http://www.w3.org/1999/html">
+
+    <!-- This section should be hidden by default and shown when there are todos -->
+    <section class="main">
+
+        <input onclick="please(this)" id="toggle-all" class="toggle-all" type="checkbox">
+        <label for="toggle-all">Mark all as complete</label>
+        <script>
+            function please(p) {
+             if(p.checked)
+             {window.location.href='/pleaset';
+
+             }else{window.location.href='/pleasef';
+             }
+
+
+
+            }
+        </script>
+
+
+
+
+        <ul class="todo-list">
+            <!-- These are here just to show the structure of the list items -->
+            <!-- List items should get the class `editing` when editing and `completed when marked as completed -->
+           {{# each items}}
+
+               <li  ondblclick="myfunc(this,'{{this.id}}','{{this.text}}')"
+               {{#if this.status}}
+                       class="completed"
+               {{/if}}
+
+               >
+
+                   <div class="view">
+
+                       <input class="toggle" type="checkbox"
+                           {{#if this.status}}
+                          checked
+                           {{/if}}
+                              onchange="window.location.href='/update/{{this.id}}'"></input>
+                       <label >{{this.text}}</label>
+                       <button onclick="window.location.href='/delete/{{this.id}}'" class="destroy"></button>
+                   </div>
+                   <input class="edit" value="Create a TodoMVC template">
+               </li>
+           {{/each}}
+            <li class="completed">
+                <div class="view">
+                    <input class="toggle" type="checkbox" checked>
+                    <label>Taste JavaScript</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" value="Create a TodoMVC template">
+            </li>
+            <li>
+                <div class="view">
+                    <input class="toggle" type="checkbox">
+                    <label>Buy a unicorn</label>
+                    <button class="destroy"></button>
+                </div>
+                <input class="edit" value="Rule the web">
+            </li>
+        </ul>
+    </section>
+    <!-- This footer should hidden by default and shown when there are todos -->
+    <footer class="footer">
+        <!-- This should be `0 items left` by default -->
+        <span class="todo-count"><strong>{{coun}}</strong> item left</span>
+        <!-- Remove this if you don't implement routing -->
+        <ul class="filters">
+            <li>
+                <a class="selected" href="/">All</a>
+            </li>
+            <li>
+                <a href="/active">Active</a>
+            </li>
+            <li>
+                <a href="/justcompleted">Completed</a>
+            </li>
+        </ul>
+        <!-- Hidden if no completed items are left ↓ -->
+        <button onclick ="window.location.href='/complete'" class="clear-completed">Clear completed</button>
+    </footer>
+</section>
+<footer class="info">
+    <p>Double-click to edit a todo</p>
+    <!-- Remove the below line ↓ -->
+    <p>Template by <a href="http://sindresorhus.com">Sindre Sorhus</a></p>
+    <!-- Change this out with your name and url ↓ -->
+    <p>Created by <a href="http://todomvc.com">you</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+
+<script>
+    function myfunc (a,b,c)
+    {
+        //alert(a+b+c);
+       // a.innerHTML = "<input type='text' class='new-todo' >";
+        a.innerHTML="<form action=\"/UPL\" method=\"post\" id=\"myForm\" '> <input name='id' value='"+b+"' hidden >" +
+                " <input onblur='foo()' class=\"new-todo\" type='text'" +
+                " name=\"tash\" value='"+c+"'  autofocus></form>";
+
+    }
+    function foo(){
+
+        document.forms['myForm'].submit();
+    }
+</script>
